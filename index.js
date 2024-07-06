@@ -62,4 +62,24 @@ const fn = async () => {
   console.log(claimUrl, transferId, txHash);
 };
 
-fn();
+// fn();
+
+const redeem = async () => {
+  const txHash = "0xfef3e8bc90b6b44bb008a169d7892c23b3d7ea6123207650d4a41092adfa699d"
+  const chainId = 8453
+  const claimLink = await sdk.retrieveClaimLink({ chainId, txHash }) 
+  const { status, operations } = await claimLink.getStatus()
+  console.log(status, operations)
+  const dest = "0x485Ad1e33d861eAdB70C7640B59D70908A412cad"
+  try {
+    const claimTxHash = await claimLink.redeem(dest)
+    console.log(claimTxHash)
+  }
+  catch (e) {
+    console.error(e)
+  }
+}
+
+
+redeem()
+
